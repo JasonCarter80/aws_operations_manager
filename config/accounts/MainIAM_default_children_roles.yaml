@@ -1,0 +1,45 @@
+global: !include ../global.yaml
+accounts: !include ../accounts.yaml
+
+roles:
+  assumeAdmin:
+    trusts:
+      - parent
+    inline: true
+    assume:
+      roles:
+        - AdminRole
+    in_accounts:
+      - parent          
+  
+  assumeReadOnly:
+    trusts:
+      - parent
+    inline: true 
+    assume:
+      roles:
+        - ReadOnlyRole
+    in_accounts:
+      - parent  
+  
+  assumePowerUser:
+    trusts:
+      - parent
+    inline: true 
+    assume:
+      roles:
+        - PowerUser
+    in_accounts:
+      - parent 
+
+
+groups:
+# This group will automatically generate the below roles in each ChildAccout, as well as build groups 
+# for each Child account in the format of Account_Id-Role (19990000000-Admin) with the Assume policy 
+# attached as an Inline Policy to reduce management touch-points.
+  default_children:
+    inline_policies:
+      - assumeAdminRole
+      - assumeReadOnlyRole
+    in_accounts:
+      - parent 

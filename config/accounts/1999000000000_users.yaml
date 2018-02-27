@@ -1,0 +1,13 @@
+global: !include ../global.yaml
+accounts: !include ../accounts.yaml
+
+users:
+  subaccountAdmin@email.com:
+    groups:
+      - 1999000000000-assumeAdminRole
+  subaccountReadOnly@email.com:
+    groups:
+      - 1999000000000-assumeReadOnlyRole
+  subaccountSpecificAccess@email.com:
+    groups:
+      - 1999000000000-SpecificRole

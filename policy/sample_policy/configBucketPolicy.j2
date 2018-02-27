@@ -1,0 +1,31 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": ["s3:PutObject*"],
+            "Principal": {"Service": "cloudtrail.amazonaws.com"},
+            "Resource": [
+                 {% for key, value  in config.accounts.items() %}
+                 
+                    {% if loop.last %}
+                        "arn:aws:s3:::{{ template_vars.config_bucket }}/AWSLogs/{{ value["id"] }}/*"
+                    {% else %}
+                        "arn:aws:s3:::{{ template_vars.config_bucket }}/AWSLogs/{{ value["id"] }}/*",
+                    {% endif %}
+                {% endfor %}
+            ],
+            "Condition": {
+                "StringLike": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": ["s3:GetBucketAcl"],
+            "Principal": {"Service": "cloudtrail.amazonaws.com"},
+            "Resource": "arn:aws:s3:::{{ template_vars.config_bucket }}"
+        }
+    ]
+}

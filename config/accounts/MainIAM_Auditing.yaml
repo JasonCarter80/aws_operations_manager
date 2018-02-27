@@ -1,0 +1,23 @@
+# This file creates an S3 Bucket for CloudTrail Audits, as well as as setups a CloudTrail Audit 
+# for each account
+
+global: !include ../global.yaml
+accounts: !include ../accounts.yaml
+
+buckets:
+  techops-cloudtrail-logs:
+    retain_on_delete: true 
+    bucket_policy:
+      description: "S3 Bucket to Accept Logs from All Child Accounts"
+      policy_file: configBucketPolicy.j2
+      template_vars:
+        config_bucket: mainiam-cloudtrail-logs
+
+cloudtrail:
+  techops-cloudtrail:
+    logging: true
+    globalevents: true
+    multiregion: true
+    bucket: mainiam-cloudtrail-logs
+    in_accounts:
+      - all

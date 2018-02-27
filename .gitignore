@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__
+output_templates/
+configs/
+*.pyc
+secrets.yaml

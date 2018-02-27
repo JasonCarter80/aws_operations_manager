@@ -1,0 +1,11 @@
+global: !include ../global.yaml
+accounts: !include ../accounts.yaml
+
+roles:
+  1999000000000-SpecificRole:
+    trusts:
+      - parent
+    managed_policies:
+      - arn:aws:iam::aws:policy/PowerUserAccess
+    in_accounts:
+      - Prod

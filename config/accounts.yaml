@@ -1,0 +1,9 @@
+Main_IAM:
+  id: !secret account_iam
+  parent: true
+Dev:
+  id: !secret account_dev
+Prod:
+  id: 1999000000000
+Staging:
+  id: 5823498123487

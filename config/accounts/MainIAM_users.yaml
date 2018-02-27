@@ -1,0 +1,16 @@
+# This file should be used to manage individua MainIAM Users and their role Assignments
+# Sub Account users should be seperated
+
+global: !include ../global.yaml
+accounts: !include ../accounts.yaml
+
+
+users:
+  jason@jasontest.com:
+    groups:
+      - central-Admin
+      - central-All
+  otheradmin@jasontest.com:
+    groups:
+      - central-ReadOnly
+      - central-All

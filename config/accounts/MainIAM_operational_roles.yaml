@@ -1,0 +1,81 @@
+# This file should be used to create Roles for the MainIAM Users who will have accesss
+# In all accounts
+
+global: !include ../global.yaml
+accounts: !include ../accounts.yaml
+
+policies:
+  centralServicesProtect:
+      description: Central Services Resorce Protection
+      policy_file: centralServicesProtect.j2
+      template_vars:
+        shared_services_prefix: MainIAM
+  protectCentralIAM:
+    description: Prevent modificaiton of Roles and Managed policies deployed via this tool
+    policy_file: protectCentralIAM.j2
+  baseIamUserGrants:
+    description: Grant Pass Role permission and Read access for IAM
+    policy_file: baseIamUserGrants.j2            
+  assumeAdminAllChildAccounts:
+    description: Allow Central Users to Have Admin in All SubAccounts
+    policy_file: assumeAdminAllChildAccounts.j2    
+    in_accounts:
+      - parent
+  assumeReadOnlyAllChildAccounts:
+    description: Allow Central Users to Have Read Only in All SubAccounts
+    policy_file: assumeReadOnlyAllChildAccounts.j2        
+    in_accounts:
+      - parent
+roles:
+  PowerUser:
+    trusts:
+      - parent
+    managed_policies:
+      - arn:aws:iam::aws:policy/PowerUserAccess
+      - protectCentralIAM
+      - centralServicesProtect
+      - baseIamUserGrants
+    in_accounts:
+      - all
+  AdminRole:
+    trusts:
+      - parent
+    managed_policies:
+      - arn:aws:iam::aws:policy/AdministratorAccess
+      - protectCentralIAM
+      - centralServicesProtect
+      - baseIamUserGrants      
+    in_accounts:
+      - all
+  ReadOnlyRole:
+    trusts:
+      - parent
+    managed_policies:
+      - arn:aws:iam::aws:policy/ReadOnlyAccess
+    in_accounts:
+      - all     
+     
+
+groups:
+  central-All:
+    managed_policies:
+      - arn:aws:iam::aws:policy/IAMSelfManageServiceSpecificCredentials
+      - arn:aws:iam::aws:policy/IAMUserChangePassword
+      - arn:aws:iam::aws:policy/IAMUserSSHKeys
+      - arn:aws:iam::aws:policy/IAMReadOnlyAccess
+    in_accounts:
+      - parent
+
+  central-Admin:
+    managed_policies:
+      - arn:aws:iam::aws:policy/AdministratorAccess
+      - assumeAdminAllChildAccounts
+    in_accounts:
+      - parent 
+  
+  central-ReadOnly:
+    managed_policies:
+      - assumeReadOnlyAllChildAccounts
+    in_accounts:
+      - parent   
+   

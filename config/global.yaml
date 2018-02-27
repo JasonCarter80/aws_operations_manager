@@ -1,0 +1,8 @@
+names:
+  policies: true
+  roles: True
+  users: True
+  groups: True
+  buckets: True
+  cloudtrail: True
+template_outputs: false
