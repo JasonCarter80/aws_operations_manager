@@ -5,7 +5,7 @@ global: !include ../global.yaml
 accounts: !include ../accounts.yaml
 
 buckets:
-  techops-cloudtrail-logs:
+  MainIAM-cloudtrail-logs:
     retain_on_delete: true 
     bucket_policy:
       description: "S3 Bucket to Accept Logs from All Child Accounts"
@@ -14,7 +14,7 @@ buckets:
         config_bucket: mainiam-cloudtrail-logs
 
 cloudtrail:
-  techops-cloudtrail:
+  MainIAM-cloudtrail:
     logging: true
     globalevents: true
     multiregion: true
