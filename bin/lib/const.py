@@ -20,3 +20,4 @@ _LOGGER = logging.getLogger(__name__)
 BIN_DIR = "/bin"
 TO_JSON = "JSON"
 TO_YAML = "YAML"
+SECRET_YAML = 'secrets.yaml'

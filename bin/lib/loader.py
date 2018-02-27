@@ -18,11 +18,13 @@
 from collections import OrderedDict
 from typing import Union, List, Dict
 import datetime
+from lib.const import SECRET_YAML
 import os
 import sys
 import yaml
 import logging
 
+__SECRET_CACHE = {}
 _LOGGER = logging.getLogger(__name__)
 
 
